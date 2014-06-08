@@ -1,0 +1,45 @@
+@name Player Detector
+@inputs Button SilentMode Ranger:string ID1:string ID2:string ID3:string
+@outputs Screen:string Alarm
+@persist Enabled
+
+Enabled = 1
+interval(2000)
+findByClass("player")
+Targ = findClosest(entity():pos())
+if(Enabled == 1){
+    if(Ranger != ID1){
+        if(Ranger != ID2){
+            if(Ranger != ID3){
+                if(Ranger != ""){print(_HUD_PRINTCENTER,Targ)
+                concmd("say /radio INTRUDER DETECTED")
+                Enabled = 0
+                if(SilentMode == 0){
+                    Screen = "INTRUDER DETECTED"
+                    Alarm = 1}
+                }
+            }
+        }
+    }
+}
+else{Screen = "Base is secure"
+Alarm = 0}
+
+if(Button == 1){
+    Enabled = 1
+    Screen = "Base is secured."
+    if(Alarm == 1){
+        Alarm = 0
+        concmd("say /radio The alarm was reset via button.")}
+    }
+
+if(owner():lastSaid() == "!resetpd" & Alarm == 1){Alarm = 0
+Enabled = 1
+Screen = "Base is secured."
+concmd("say /radio The alarm was reset via command.")}
+
+if(duped()){
+selfDestructAll()
+hint("That belongs to PtGaming", 6)
+}
+
