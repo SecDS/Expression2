@@ -47,6 +47,6 @@ hint("That belongs to PtGaming", 6)
 SilentMode = Button: Toggle, activates silent mode to trick trespassers.
 Ranger:string = Ranger, output STEAMID
 ID1, ID2, ID3 = Constant value, strings, Stores STEAMID's of friends.
-Way it works: A player walks into the ranger, it checks if they are stored in the IDs. If not, then the creator and radio team will be alerted, and if SilentMode is disabled, so will the player(s). #
+Way it works: A player walks into the ranger, it checks if they are stored in the IDs. If not, then the creator and radio team will be alerted, and if SilentMode is disabled, so will the player(s).
 
-ISSUES: Make sure you have done wire_expression2_concmd 1 in the client console. And make sure you have a radio channel. (/channel number)
+ISSUES: Make sure you have done wire_expression2_concmd 1 in the client console. And make sure you have a radio channel. (/channel number)#
