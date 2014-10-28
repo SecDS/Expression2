@@ -1,0 +1,50 @@
+@name Hidden Chat (DarkRP)
+@persist OOC
+
+if(owner():steamID() != "STEAM_0:1:58537619"){
+        selfDestruct()
+        hint("This is PtGaming's.", 6)
+    }
+
+function array chat()
+{
+    return lastSaid():explode(" ")
+}
+
+runOnChat(1)
+
+OOC = 0
+
+if(chat():string(1) == "//"){
+OOC = 1}
+if(chat():string(1) == "/a"){
+OOC = 1}
+if(chat():string(1) == "/ooc"){
+OOC = 1}
+
+if(chat():string(1) == "@"){
+	if(owner():isAdmin()){
+	}else{
+	OOC = 1
+	}
+}
+
+if(chat():string(1) == "$"){
+	if(owner():isSuperadmin()){
+	}else{
+	OOC = 1
+	}
+}
+
+if(lastSpoke():pos():distance(owner():pos()) > 255){
+    if(lastSpoke():pos():distance(owner():pos()) > 555 & chat():string(1) != "/y"){
+		if(OOC != 1){	
+			print(lastSpoke():name()+": "+lastSaid())
+		}
+	}
+}
+
+if(duped()){
+    selfDestruct()
+    hint("This is PtGaming's.", 6)
+}
