@@ -1,5 +1,5 @@
-@name Hidden Chat (DarkRP)
-@persist OOC
+@name Hidden Chat V1.1
+@persist OOC Vector:vector
 
 if(owner():steamID() != "STEAM_0:1:58537619"){
         selfDestruct()
@@ -15,36 +15,19 @@ runOnChat(1)
 
 OOC = 0
 
-if(chat():string(1) == "//"){
-OOC = 1}
-if(chat():string(1) == "/a"){
-OOC = 1}
-if(chat():string(1) == "/ooc"){
-OOC = 1}
-
-if(chat():string(1) == "@"){
-	if(owner():isAdmin()){
-	}else{
-	OOC = 1
-	}
-}
-
-if(chat():string(1) == "$"){
-	if(owner():isSuperadmin()){
-	}else{
-	OOC = 1
-	}
-}
+if(chat():string(1) == "//"){OOC = 1}
+elseif(chat():string(1) == "/a"){OOC = 1}
+elseif(chat():string(1) == "/ooc"){OOC = 1}
+elseif(chat():string(1) == "@"){OOC = 1}
+elseif(chat():string(1) == "$"){OOC = 1}
 
 if(lastSpoke():pos():distance(owner():pos()) > 255){
     if(lastSpoke():pos():distance(owner():pos()) > 555 & chat():string(1) != "/y"){
-		if(OOC != 1){	
-			print(lastSpoke():name()+": "+lastSaid())
-		}
-	}
+        if(OOC != 1){print(lastSpoke():name()+": "+lastSaid())}
+    }
 }
 
 if(duped()){
-    selfDestruct()
+    selfDestructAll()
     hint("This is PtGaming's.", 6)
 }
