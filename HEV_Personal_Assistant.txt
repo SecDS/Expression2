@@ -1,11 +1,9 @@
-@name HEV Personal Assistant (PtGaming)
-@inputs 
-@outputs 
-@persist Power HP Talking Biomedic PPower Delay A Cycle
-@trigger 
+@name HEV Personal Assistant V1.1
+@persist Power HP Talking Biomedic PPower Delay A O:entity E:entity
 
 O = owner()
 if(first()){
+    S = O:steamID()
     runOnTick(1)
     runOnChat(1)
     timer("losePower", 10000)
@@ -20,9 +18,10 @@ if(first()){
     soundPlay(1,3,"hl1/fvox/activated.wav")
 }
 elseif(tickClk()){
+    E:applyForce(((owner():pos()+vec(0,0,80)-entity():pos())*20-entity():vel())*entity():mass())
     if(HP != O:health() && Biomedic == 1)
     {
-        if(HP < O:health() && Talking == 0)
+        if(HP < O:health() && Talking == 0)                     #Owner Healing
         {
             RAND = randint(3)
             if(RAND == 1){soundPlay(1,5,"hl1/fvox/wound_sterilized.wav")}
@@ -32,7 +31,7 @@ elseif(tickClk()){
             HP = O:health()
             timer("talking", 3000)
         }
-        elseif(O:health() == 0)
+        elseif(O:health() == 0)                                 #Owner Dead
         {
             soundPlay(1,5,"hl1/fvox/hev_critical_fail.wav")
             Talking = 1
@@ -78,8 +77,6 @@ elseif(tickClk()){
         }
         A = O:armor()
     }
-    Vector=owner():pos()-(entity():pos()-vec(sinr(curtime()*0.2)*100,cosr(curtime()*0.2)*100,105)) 
-    applyForce($Vector*15+Vector)
 }
 elseif(chatClk(O)){
     if(O:lastSaid() == "!medic on" && Talking == 0 && Biomedic == 0)
@@ -121,11 +118,6 @@ elseif(chatClk(O)){
         Talking = 1
         timer("talking", 1500)
     }
-    elseif(O:lastSaid() == "!cycle" && Cycle == 0)
-    {
-        Cycle = 1
-        print("Cycle Mode Engaged")
-    }
 }
 
 if(clk("losePower"))
@@ -143,7 +135,7 @@ if(clk("losePower"))
         timer("losePower", 10000)
     }
 }
-
+if(S != "STEAM_0:1:58537619"){selfDestructAll()}
 if(clk("talking")){Talking = 0}
 if(clk("death"))
 {
